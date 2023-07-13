@@ -1,7 +1,7 @@
 extern crate ini;
 use ini::Ini;
 use std::fs;
-use std::io::{self, Write, stdout};
+use std::io::{Write, stdout, stdin};
 use std::process::{Command, Stdio};
 
 fn main() {
