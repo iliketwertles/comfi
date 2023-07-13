@@ -1,7 +1,6 @@
 extern crate ini;
 use ini::Ini;
 use std::fs;
-use std::io::{self, Write};
 use std::io::{self, Write, stdout};
 use std::process::{Command, Stdio};
 
