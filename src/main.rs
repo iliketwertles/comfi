@@ -1,4 +1,4 @@
-extern crate ini;
+xtern crate ini;
 use ini::Ini;
 use std::fs;
 use std::io::{Write, stdout, stdin};
@@ -22,14 +22,20 @@ fn main() {
             // Parse .desktop file
             let data = app_info.section(Some("Desktop Entry")).unwrap();
             let exec = data.get("Exec").unwrap();
-            // Run exec with args...
-            if exec.contains(' ') {
-                let mut exec_split = exec.split_whitespace();
-                let mut cmd = Command::new(exec_split.next().unwrap());
+            let binpath = exec.split_whitespace().next().unwrap();
+            // Fix firefox/cura trying to open non-existant file
+            if exec.contains('%') {
+                let mut cmd = Command::new(binpath);
+                cmd.stdout(Stdio::null()).stderr(Stdio::null()).spawn().unwrap();
+                break
+            // If args...
+            } else if exec.contains(' ') {
+                let exec_split = exec.split_whitespace();
+                let mut cmd = Command::new(binpath);
                 cmd.args(exec_split).stdout(Stdio::null()).stderr(Stdio::null()).spawn().unwrap();
                 break
             // If no args...
-            } else {
+            }else {
                 let mut cmd = Command::new(exec);
                 cmd.stdout(Stdio::null()).stderr(Stdio::null()).spawn().unwrap();
                 break
