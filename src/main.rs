@@ -2,14 +2,15 @@ extern crate ini;
 use ini::Ini;
 use std::fs;
 use std::io::{self, Write};
+use std::io::{self, Write, stdout};
 use std::process::{Command, Stdio};
 
 fn main() {
     // Prompt user input 
-    io::stdout().write_all(b"App: ").unwrap();
-    io::stdout().flush().unwrap();
+    stdout().write_all(b"App: ").unwrap();
+    stdout().flush().unwrap();
     let mut app = String::new();
-    io::stdin().read_line(&mut app).expect("uhh");
+    stdin().read_line(&mut app).expect("uhh");
     let len = app.len();
     app.truncate(len - 1);
     // Path to .desktop files
